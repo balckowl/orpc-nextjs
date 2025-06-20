@@ -2,9 +2,15 @@ import { orpc } from "@/lib/orpc";
 import { safe } from "@orpc/client";
 import { notFound } from "next/navigation";
 
-export default async function Page() {
+type Props = {
+  params: Promise<{ id: string }>
+}
 
-  const { error, data, isDefined } = await safe(orpc.blog.find({ id: 1 }))
+export default async function Page({ params }: Props) {
+
+  const { id } = await params
+
+  const { error, data, isDefined } = await safe(orpc.blog.find({ id: Number(id) }))
 
   if (error) {
     if (isDefined) {

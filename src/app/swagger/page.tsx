@@ -18,7 +18,7 @@ export default async function Page() {
     info: {
       title: 'Blog API',
       version: '1.0.0'
-    }
+    },
   })
 
   return <PageContent spec={spec} />;
