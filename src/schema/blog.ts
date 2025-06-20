@@ -41,7 +41,7 @@ JSON_SCHEMA_REGISTRY.add(blogSchema, {
 export const blogsSchema = z.array(blogSchema)
 
 export const blogIdSchema = z.object({
-  id: z.string()
+  id: z.number()
 })
 
 //どうせ上書きする

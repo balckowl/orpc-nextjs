@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 export default async function Page() {
 
-  const { error, data, isDefined } = await safe(orpc.blog.find({ id: "1" }))
+  const { error, data, isDefined } = await safe(orpc.blog.find({ id: 1 }))
 
   if (error) {
     if (isDefined) {

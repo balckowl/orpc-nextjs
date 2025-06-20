@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 export const listBlogs = pub.
   route({
     method: "GET",
-    path: "/blogs",
+    path: "/",
     summary: "List all Blogs",
     tags: ["Blogs"]
   }).output(blogsSchema)
@@ -30,9 +30,10 @@ export const listBlogs = pub.
 export const createBlog = authGuard
   .route({
     method: "POST",
-    path: "/blogs",
+    path: "/",
     summary: "Create a Blog",
-    tags: ["Blogs"]
+    tags: ["Blogs"],
+    successStatus: 201
   }).input(createBlogSchema)
   .output(blogSchema)
   .handler(async ({ input, context, errors }) => {
@@ -71,7 +72,7 @@ export const createBlog = authGuard
 export const findBlog = pub.
   route({
     method: "GET",
-    path: "/blogs/{id}",
+    path: "/{id}",
     summary: "Find a Blog",
     tags: ["Blogs"],
   })
