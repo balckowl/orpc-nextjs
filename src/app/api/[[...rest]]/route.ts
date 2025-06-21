@@ -45,6 +45,8 @@ const openAPIHandler = new OpenAPIHandler(router, {
           },
         },
       },
+      docsPath: '/doc',
+      specPath: '/doc/spec.json',
     }),
   ],
 })
