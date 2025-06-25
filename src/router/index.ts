@@ -1,7 +1,7 @@
-import { os } from "@orpc/server";
 import { createBlog, findBlog, listBlogs } from "./blog";
+import { pub } from "@/orpc";
 
-export const router = os.prefix("/blogs").router({
+export const router = pub.prefix("/blogs").router({
   blog: {
     list: listBlogs,
     find: findBlog,

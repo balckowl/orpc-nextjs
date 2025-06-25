@@ -10,8 +10,8 @@ export const requiredAuthMiddleware = os
     }
   })
   .$context<{ session?: { session?: Session, user?: User } }>()
-  .middleware(async ({ context, next, errors }) => {
-    const session = context.session ?? await auth.api.getSession({
+  .middleware(async ({ next, errors }) => {
+    const session = await auth.api.getSession({
       headers: await headers()
     })
 
@@ -21,6 +21,5 @@ export const requiredAuthMiddleware = os
 
     return next({
       context: { user: session.user },
-      ...errors
     })
   })

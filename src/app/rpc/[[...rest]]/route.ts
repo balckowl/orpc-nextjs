@@ -1,3 +1,5 @@
+
+import { createORPCContext } from '@/context'
 import { router } from '@/router'
 import { RPCHandler } from '@orpc/server/fetch'
 
@@ -6,7 +8,7 @@ const handler = new RPCHandler(router)
 async function handleRequest(request: Request) {
   const { response } = await handler.handle(request, {
     prefix: '/rpc',
-    context: {}, // Provide initial context if needed
+    context: await createORPCContext()
   })
 
   return response ?? new Response('Not found', { status: 404 })

@@ -44,7 +44,7 @@ export const createBlog = authGuard
         .values({
           title: input.title,
           content: input.content,
-          userId: context.user.id
+          userId: context.session.user.id
         })
         .returning();
 

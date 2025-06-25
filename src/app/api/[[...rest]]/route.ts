@@ -8,6 +8,7 @@ import {
     ZodToJsonSchemaConverter
 } from '@orpc/zod/zod4'
 import { OpenAPIReferencePlugin } from '@orpc/openapi/plugins'
+import { createORPCContext } from '@/context'
 
 const openAPIHandler = new OpenAPIHandler(router, {
   interceptors: [
@@ -54,7 +55,7 @@ const openAPIHandler = new OpenAPIHandler(router, {
 async function handleRequest(request: Request) {
   const { response } = await openAPIHandler.handle(request, {
     prefix: '/api',
-    context: {},
+    context: await createORPCContext(),
   })
 
   return response ?? new Response('Not found', { status: 404 })
