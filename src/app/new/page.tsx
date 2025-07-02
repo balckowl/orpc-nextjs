@@ -29,12 +29,16 @@ export default function Page() {
     const { title, content } = formData
     const { error } = await safe(orpc.blog.create({ title, content }))
 
-    if(error){
-      alert("エラーが発生しちゃったよ")
-    }else{
-      alert("投稿に成功しました!")
-      router.push("/")
-    }
+      if (isDefinedError(error)) {
+        if(error.code === "UNAUTHORIZED"){
+          alert("認証してないんだけど。")
+        }
+      } else if (error) {
+        alert("エラーが発生しちゃったよ")
+      } else {
+        alert("投稿に成功しました!")
+        router.push("/")
+      }
   };
 
   return (

@@ -11,22 +11,25 @@ export const base = os
 
 export const pub = base;
 
-export const authGuard = base.use(
-  async ({ context, next }) => {
-    if (!context.session) {
-      throw new ORPCError(
-        "UNAUTHORIZED",
-        { message: 'Unauthorized' } 
-      );
+export const authGuard = base.
+  errors({
+    "UNAUTHORIZED": {
+      message: "Authorization required."
     }
+  })
+  .use(
+    async ({ context, next, errors }) => {
+      if (!context.session) {
+        throw errors.UNAUTHORIZED()
+      }
 
-    return next({
-      context: {
-        session: context.session,
-      },
-    });
-  },
-);
+      return next({
+        context: {
+          session: context.session,
+        },
+      });
+    },
+  );
 
 
 // export const pub = os.
