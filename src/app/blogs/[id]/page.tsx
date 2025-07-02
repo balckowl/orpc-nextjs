@@ -1,5 +1,5 @@
 import { orpc } from "@/lib/orpc";
-import { safe } from "@orpc/client";
+import { isDefinedError, safe } from "@orpc/client";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -10,18 +10,19 @@ export default async function Page({ params }: Props) {
 
   const { id } = await params
 
-  const { error, data, isDefined } = await safe(orpc.blog.find({ id: Number(id) }))
+  const {
+    error,
+    data,
+  } = await safe(orpc.blog.find({ id: Number(id) }))
 
-  if (error) {
-    if (isDefined) {
-      if (error.code === "NOT_FOUND") return notFound();
-    } else {
-      throw error;
-    }
-    return;
+
+  if (isDefinedError(error)) {
+    if (error.code === "NOT_FOUND") return notFound();
+  } else if (error) {
+    throw error
+  } else {
+    return (
+      <div>{data.title}</div>
+    );
   }
-
-  return (
-    <div>{data.title}</div>
-  );
 }

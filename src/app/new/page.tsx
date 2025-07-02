@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createBlogSchema } from "@/schema/blog";
 import { orpc } from "@/lib/orpc";
 import { useRouter } from "next/navigation";
+import { isDefinedError, safe } from "@orpc/client";
 
 export type CreateBlogInput = z.infer<typeof createBlogSchema>;
 
@@ -26,7 +27,14 @@ export default function Page() {
 
   const onSubmit: SubmitHandler<CreateBlogInput> = async (formData) => {
     const { title, content } = formData
-    await orpc.blog.create({ title, content })
+    const { error } = await safe(orpc.blog.create({ title, content }))
+
+    if(error){
+      alert("エラーが発生しちゃったよ")
+    }else{
+      alert("投稿に成功しました!")
+      router.push("/")
+    }
   };
 
   return (
